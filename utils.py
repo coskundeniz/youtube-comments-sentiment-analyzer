@@ -3,6 +3,7 @@ import logging
 from logging.handlers import RotatingFileHandler
 
 # from exceptions import UnsupportedConfigFileError
+import pandas
 
 
 LOG_FILENAME = "yt_comments_analyzer.log"
@@ -49,3 +50,25 @@ def get_configuration(filename="config.json") -> dict:
         config = json.load(configfile)
 
     return config
+
+
+def create_dataframe_from_comments(all_comments: list) -> pandas.DataFrame:
+    """Create a dataframe from comments
+
+    :type all_comments: list
+    :param all_comments: List of comments
+    :rtype: pandas.DataFrame
+    :returns: Pandas dataframe
+    """
+
+    df = pandas.DataFrame(list(all_comments), columns=["Original Comment Text"])
+
+    # df.to_csv("comments_to_clean.csv", columns=["Original Comment Text"])
+
+    pandas.set_option("display.max_colwidth", None)
+    # pandas.set_option("display.max_colwidth", 120)
+
+    # print("======= BEFORE =======")
+    # print(df.head(30))
+
+    return df
