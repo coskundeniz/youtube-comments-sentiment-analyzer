@@ -35,7 +35,7 @@ class YoutubeService:
         :returns: List of comments
         """
 
-        logger.debug(f"Getting comments for video: {self._video_url}")
+        logger.info(f"Getting comments for video: {self._video_url}")
 
         video_id = self._video_url.split("?v=")[1]
 

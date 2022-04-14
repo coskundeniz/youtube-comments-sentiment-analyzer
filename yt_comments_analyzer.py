@@ -3,6 +3,7 @@ from argparse import ArgumentParser
 from data_cleaner import clean_comments
 from exceptions import YTCommentsAnalyzerException
 from utils import logger, create_dataframe_from_comments
+from sentiment_analyzer import analyze_comments
 from youtube_service import YoutubeService
 
 
@@ -65,8 +66,11 @@ def main(args):
     logger.info("Cleaning data for analysis...")
     cleaned_df = clean_comments(df)
 
-    # print("======= AFTER =======")
     # print(cleaned_df.head(30))
+
+    results_df = analyze_comments(cleaned_df)
+
+    print(results_df.head(30))
 
 
 if __name__ == "__main__":

@@ -10,8 +10,6 @@ YouTube comments sentiment analyzer tool
 
 * https://machinelearningmastery.com/basic-data-cleaning-for-machine-learning/
 
-* https://www.red-gate.com/simple-talk/development/data-science-development/sentiment-analysis-python/
-
 ---
 
 * Data cleaning steps
@@ -23,3 +21,11 @@ YouTube comments sentiment analyzer tool
 
 * https://towardsdatascience.com/part-1-data-cleaning-does-bert-need-clean-data-6a50c9c6e9fd
 * https://stackoverflow.com/questions/66338970/cleaning-text-using-nltk
+
+* Sentiment analysis
+
+    * https://www.red-gate.com/simple-talk/development/data-science-development/sentiment-analysis-python/
+    * https://textblob.readthedocs.io/en/latest/quickstart.html#sentiment-analysis
+    * https://www.youtube.com/watch?v=ujId4ipkBio
+    * https://www.youtube.com/watch?v=szczpgOEdXs
+    * https://towardsdatascience.com/the-most-favorable-pre-trained-sentiment-classifiers-in-python-9107c06442c6
