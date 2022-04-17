@@ -13,6 +13,8 @@ CommentGenerator = Generator[Comments, None, None]
 class YoutubeService:
     """Handle API requests
 
+    https://developers.google.com/youtube/v3/docs/videos
+    https://developers.google.com/youtube/v3/docs/commentThreads
     https://github.com/youtube/api-samples/blob/master/python/comment_handling.py
 
     :type video_url: str
@@ -24,6 +26,7 @@ class YoutubeService:
     def __init__(self, video_url: str, include_replies: bool = False) -> None:
 
         self._video_url = video_url
+        self._video_id = video_url.split("?v=")[1]
         self._service = build(API_SERVICE_NAME, API_VERSION, developerKey=API_KEY)
         self._include_replies = include_replies
 
@@ -37,17 +40,11 @@ class YoutubeService:
 
         logger.info(f"Getting comments for video: {self._video_url}")
 
-        video_id = self._video_url.split("?v=")[1]
+        # TODO: use - https://developers.google.com/youtube/v3/getting-started#fields
 
         results = (
             self._service.commentThreads()
-            .list(
-                part="snippet",
-                videoId=video_id,
-                textFormat="plainText",
-                # maxResults=100,
-                maxResults=30,
-            )
+            .list(part="snippet", videoId=self._video_id, textFormat="plainText", maxResults=100)
             .execute()
         )
 
@@ -80,16 +77,26 @@ class YoutubeService:
                     self._service.commentThreads()
                     .list(
                         part="snippet",
-                        videoId=video_id,
+                        videoId=self._video_id,
                         textFormat="plainText",
                         pageToken=results["nextPageToken"],
-                        # maxResults=100,
-                        maxResults=30,
+                        maxResults=100,
                     )
                     .execute()
                 )
             else:
                 break
+
+    def get_video_title(self) -> str:
+        """Get the title of the video
+
+        :rtype: str
+        :returns: Video title
+        """
+
+        response = self._service.videos().list(part="snippet", id=self._video_id).execute()
+
+        return response["items"][0]["snippet"]["title"]
 
     def _get_comment_replies(self, comment_id: str) -> Comments:
         """Get the replies to the comment given by id

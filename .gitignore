@@ -133,4 +133,9 @@ dmypy.json
 
 *.ipynb
 
+*.png
+*.csv
+
+*.log*
+
 credentials.json

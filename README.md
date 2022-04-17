@@ -29,3 +29,19 @@ YouTube comments sentiment analyzer tool
     * https://www.youtube.com/watch?v=ujId4ipkBio
     * https://www.youtube.com/watch?v=szczpgOEdXs
     * https://towardsdatascience.com/the-most-favorable-pre-trained-sentiment-classifiers-in-python-9107c06442c6
+
+* YouTube Rewind 2019: For the Record --> 1,074,433 Comments
+    * https://www.youtube.com/watch?v=2lAe1cqCOXo
+
+* Call Of Duty Infinite Warfare - Game Movie --> 1,727 Comments
+    * https://www.youtube.com/watch?v=ixzKvJeXrY4
+
+* Official Reveal Trailer | Call of Duty: Infinite Warfare --> 743,563 Comments
+    * https://www.youtube.com/watch?v=EeF3UTkCoxY
+
+
+p yt_comments_analyzer.py -u https://www.youtube.com/watch?v=14z_Tf3p2Mw -o result_chart_final_5.png -ir
+
+p yt_comments_analyzer.py -u https://www.youtube.com/watch?v=EeF3UTkCoxY -o result_chart_final_6.png
+
+

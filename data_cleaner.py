@@ -2,7 +2,7 @@ import nltk
 from nltk.corpus import stopwords
 import pandas as pd
 
-# nltk.download("stopwords")
+nltk.download("stopwords", quiet=True)
 
 
 def clean_comments(dataframe: pd.DataFrame) -> pd.DataFrame:

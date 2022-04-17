@@ -4,7 +4,33 @@ import pandas
 
 from utils import logger
 
-nltk.download("vader_lexicon")
+nltk.download("vader_lexicon", quiet=True)
+
+
+def analyze_comments(dataframe: pandas.DataFrame) -> pandas.DataFrame:
+    """Analyze comments by calculating polarity scores
+
+    Add Sentiment Score and Sentiment columns to the dataframe.
+
+    :type dataframe: pd.DataFrame
+    :param dataframe: Comments dataframe
+    :rtype: pd.DataFrame
+    :returns: Dataframe with sentiment analysis results
+    """
+
+    logger.info("Performing sentiment analysis on comments...")
+
+    analyzer = SentimentIntensityAnalyzer()
+
+    dataframe["Sentiment Score"] = dataframe["Cleaned Comment Text"].apply(
+        lambda comment: _get_polarity_score(analyzer, comment)
+    )
+
+    dataframe["Sentiment"] = dataframe["Sentiment Score"].apply(
+        lambda score: _convert_score_to_sentiment(score)
+    )
+
+    return dataframe
 
 
 def _get_polarity_score(analyzer: SentimentIntensityAnalyzer, text: str) -> float:
@@ -44,29 +70,3 @@ def _convert_score_to_sentiment(score):
         sentiment = "Positive"
 
     return sentiment
-
-
-def analyze_comments(dataframe: pandas.DataFrame) -> pandas.DataFrame:
-    """Analyze comments by calculating polarity scores
-
-    Add Sentiment Score and Sentiment columns to the dataframe.
-
-    :type dataframe: pd.DataFrame
-    :param dataframe: Comments dataframe
-    :rtype: pd.DataFrame
-    :returns: Dataframe with sentiment analysis results
-    """
-
-    logger.info("Performing sentiment analysis on comments...")
-
-    analyzer = SentimentIntensityAnalyzer()
-
-    dataframe["Sentiment Score"] = dataframe["Cleaned Comment Text"].apply(
-        lambda comment: _get_polarity_score(analyzer, comment)
-    )
-
-    dataframe["Sentiment"] = dataframe["Sentiment Score"].apply(
-        lambda score: _convert_score_to_sentiment(score)
-    )
-
-    return dataframe

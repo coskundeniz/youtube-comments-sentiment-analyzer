@@ -77,8 +77,8 @@ def main(args):
 
     print(results_df.head(30))
 
-    # TODO: Also pass the video title
-    create_pie_chart(results_df, args.output)
+    video_title = service.get_video_title()
+    create_pie_chart(results_df, video_title, args.output)
 
 
 if __name__ == "__main__":
