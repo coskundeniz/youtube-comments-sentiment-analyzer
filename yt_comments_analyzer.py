@@ -5,6 +5,7 @@ from exceptions import YTCommentsAnalyzerException
 from utils import logger, create_dataframe_from_comments
 from sentiment_analyzer import analyze_comments
 from youtube_service import YoutubeService
+from visualize import create_pie_chart
 
 
 def handle_exception(exp: YTCommentsAnalyzerException) -> None:
@@ -27,6 +28,12 @@ def get_arg_parser() -> ArgumentParser:
 
     arg_parser = ArgumentParser()
     arg_parser.add_argument("-u", "--url", help="Video URL to analyze comments")
+    arg_parser.add_argument(
+        "-o",
+        "--output",
+        default="sentiment_analysis_chart.png",
+        help="Name or absolute path of the output chart",
+    )
     arg_parser.add_argument(
         "-c", "--useconfig", action="store_true", help="Read configuration from config.json file"
     )
@@ -66,11 +73,12 @@ def main(args):
     logger.info("Cleaning data for analysis...")
     cleaned_df = clean_comments(df)
 
-    # print(cleaned_df.head(30))
-
     results_df = analyze_comments(cleaned_df)
 
     print(results_df.head(30))
+
+    # TODO: Also pass the video title
+    create_pie_chart(results_df, args.output)
 
 
 if __name__ == "__main__":
