@@ -45,17 +45,3 @@ def get_configuration(filename="config.json") -> dict:
         config = json.load(configfile)
 
     return config
-
-
-def create_dataframe_from_comments(all_comments: list) -> pandas.DataFrame:
-    """Create a dataframe from comments
-
-    :type all_comments: list
-    :param all_comments: List of comments
-    :rtype: pandas.DataFrame
-    :returns: Pandas dataframe
-    """
-
-    df = pandas.DataFrame(list(all_comments), columns=["Original Comment Text"])
-
-    return df

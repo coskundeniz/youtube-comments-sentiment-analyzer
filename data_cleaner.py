@@ -18,33 +18,22 @@ def clean_comments(dataframe: pd.DataFrame) -> pd.DataFrame:
 
     logger.info("Cleaning data for analysis...")
 
-    # remove whitespace
-    dataframe["Cleaned Comment Text"] = dataframe["Original Comment Text"].str.strip()
-
-    # replace newlines with space
-    dataframe["Cleaned Comment Text"] = dataframe["Cleaned Comment Text"].str.replace("\n", " ")
-
-    # remove mentions and links
-    dataframe["Cleaned Comment Text"] = dataframe["Cleaned Comment Text"].str.replace(
-        r"(?:\@|http?\://|https?\://|www)\S+", "", regex=True
-    )
-
-    # remove punctuations, emojis, special characters
-    dataframe["Cleaned Comment Text"] = dataframe["Cleaned Comment Text"].str.replace(
-        r"[^\w\s]+", "", regex=True
-    )
-
-    # turn to lowercase
-    dataframe["Cleaned Comment Text"] = dataframe["Cleaned Comment Text"].str.lower()
-
-    # remove numbers
-    dataframe["Cleaned Comment Text"] = dataframe["Cleaned Comment Text"].str.replace(
-        r"\d+", "", regex=True
-    )
-
-    # remove hashtags
-    dataframe["Cleaned Comment Text"] = dataframe["Cleaned Comment Text"].str.replace(
-        r"#\S+", " ", regex=True
+    dataframe["Cleaned Comment Text"] = (
+        dataframe["Original Comment Text"]
+        # remove whitespace
+        .str.strip()
+        # # replace newlines with space
+        .str.replace("\n", " ")
+        # remove mentions and links
+        .str.replace(r"(?:\@|http?\://|https?\://|www)\S+", "", regex=True)
+        # remove punctuations, emojis, special characters
+        .str.replace(r"[^\w\s]+", "", regex=True)
+        # turn to lowercase
+        .str.lower()
+        # remove numbers
+        .str.replace(r"\d+", "", regex=True)
+        # remove hashtags
+        .str.replace(r"#\S+", " ", regex=True)
     )
 
     # remove stop words

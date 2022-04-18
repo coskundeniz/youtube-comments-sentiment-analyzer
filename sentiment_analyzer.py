@@ -1,13 +1,27 @@
 import nltk
 from nltk.sentiment.vader import SentimentIntensityAnalyzer
-import pandas
+import pandas as pd
 
 from utils import logger
 
 nltk.download("vader_lexicon", quiet=True)
 
 
-def analyze_comments(dataframe: pandas.DataFrame) -> pandas.DataFrame:
+def create_dataframe_from_comments(all_comments: list) -> pd.DataFrame:
+    """Create a dataframe from comments
+
+    :type all_comments: list
+    :param all_comments: List of comments
+    :rtype: pd.DataFrame
+    :returns: Pandas dataframe
+    """
+
+    df = pd.DataFrame(list(all_comments), columns=["Original Comment Text"])
+
+    return df
+
+
+def analyze_comments(dataframe: pd.DataFrame) -> pd.DataFrame:
     """Analyze comments by calculating polarity scores
 
     Add Sentiment Score and Sentiment columns to the dataframe.
@@ -51,7 +65,7 @@ def _get_polarity_score(analyzer: SentimentIntensityAnalyzer, text: str) -> floa
     return scores["compound"]
 
 
-def _convert_score_to_sentiment(score):
+def _convert_score_to_sentiment(score) -> str:
     """Convert score to sentiment
 
     :type score: float

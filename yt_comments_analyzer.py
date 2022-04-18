@@ -1,22 +1,10 @@
 from argparse import ArgumentParser
 
 from data_cleaner import clean_comments
-from exceptions import YTCommentsAnalyzerException
-from utils import logger, get_configuration, create_dataframe_from_comments
-from sentiment_analyzer import analyze_comments
+from utils import logger, get_configuration
+from sentiment_analyzer import create_dataframe_from_comments, analyze_comments
 from youtube_service import YoutubeService
 from visualize import create_pie_chart
-
-
-def handle_exception(exp: YTCommentsAnalyzerException) -> None:
-    """Print the error message and exit
-
-    :type exp: YTViewsTrackerException
-    :param exp: Exception raised by the views tracker components
-    """
-
-    logger.error(exp)
-    raise SystemExit() from exp
 
 
 def get_arg_parser() -> ArgumentParser:
@@ -83,7 +71,7 @@ def main():
         create_pie_chart(results_df, video_title, output_file)
 
     except KeyboardInterrupt:
-        logger.info("Program ended manually.")
+        logger.info("Program was ended manually.")
 
 
 if __name__ == "__main__":
