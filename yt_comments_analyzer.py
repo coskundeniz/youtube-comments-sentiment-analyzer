@@ -75,8 +75,6 @@ def main(args):
 
     results_df = analyze_comments(cleaned_df)
 
-    print(results_df.head(30))
-
     video_title = service.get_video_title()
     create_pie_chart(results_df, video_title, args.output)
 

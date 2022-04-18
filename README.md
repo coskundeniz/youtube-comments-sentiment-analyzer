@@ -36,7 +36,7 @@ YouTube comments sentiment analyzer tool
 * Call Of Duty Infinite Warfare - Game Movie --> 1,727 Comments
     * https://www.youtube.com/watch?v=ixzKvJeXrY4
 
-* Official Reveal Trailer | Call of Duty: Infinite Warfare --> 743,563 Comments
+* Official Reveal Trailer | Call of Duty: Infinite Warfare --> 743,563 Comments (half hour)
     * https://www.youtube.com/watch?v=EeF3UTkCoxY
 
 
@@ -44,4 +44,5 @@ p yt_comments_analyzer.py -u https://www.youtube.com/watch?v=14z_Tf3p2Mw -o resu
 
 p yt_comments_analyzer.py -u https://www.youtube.com/watch?v=EeF3UTkCoxY -o result_chart_final_6.png
 
+p yt_comments_analyzer.py -u https://www.youtube.com/watch?v=ixzKvJeXrY4 -o result_chart.png
 

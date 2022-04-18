@@ -1,6 +1,7 @@
 from typing import Generator
 
 from googleapiclient.discovery import build
+from rich.console import Console
 
 from constants import API_KEY, API_SERVICE_NAME, API_VERSION
 from utils import logger
@@ -29,6 +30,7 @@ class YoutubeService:
         self._video_id = video_url.split("?v=")[1]
         self._service = build(API_SERVICE_NAME, API_VERSION, developerKey=API_KEY)
         self._include_replies = include_replies
+        self._console = Console()
 
     def get_comment_threads(self) -> CommentGenerator:
         """Get the top level comments. If --include_replies option is given,
@@ -38,54 +40,57 @@ class YoutubeService:
         :returns: List of comments
         """
 
-        logger.info(f"Getting comments for video: {self._video_url}")
+        with self._console.status(
+            f"[bold bright_green]Getting comments for video: {self._video_url}"
+        ):
+            logger.debug(f"Getting comments for video: {self._video_url}")
 
-        # TODO: use - https://developers.google.com/youtube/v3/getting-started#fields
-
-        results = (
-            self._service.commentThreads()
-            .list(part="snippet", videoId=self._video_id, textFormat="plainText", maxResults=100)
-            .execute()
-        )
-
-        while results:
-
-            for comment_thread in results["items"]:
-                comment = comment_thread["snippet"]["topLevelComment"]
-                comment_text = comment["snippet"]["textDisplay"]
-
-                logger.debug(f"{comment_text}")
-
-                yield comment_text
-
-                reply_count = comment_thread["snippet"]["totalReplyCount"]
-
-                if self._include_replies and reply_count > 0:
-
-                    replies = self._get_comment_replies(comment_thread["id"])
-
-                    # replies are returned in reverse order!
-                    for reply in reversed(replies):
-                        reply_text = reply["snippet"]["textDisplay"]
-
-                        logger.debug(f"\t{reply_text}")
-
-                        yield reply_text
-
-            if "nextPageToken" in results:
-                results = (
-                    self._service.commentThreads()
-                    .list(
-                        part="snippet",
-                        videoId=self._video_id,
-                        textFormat="plainText",
-                        pageToken=results["nextPageToken"],
-                        maxResults=100,
-                    )
-                    .execute()
+            results = (
+                self._service.commentThreads()
+                .list(
+                    part="snippet", videoId=self._video_id, textFormat="plainText", maxResults=100
                 )
-            else:
-                break
+                .execute()
+            )
+
+            while results:
+
+                for comment_thread in results["items"]:
+                    comment = comment_thread["snippet"]["topLevelComment"]
+                    comment_text = comment["snippet"]["textDisplay"]
+
+                    logger.debug(f"{comment_text}")
+
+                    yield comment_text
+
+                    reply_count = comment_thread["snippet"]["totalReplyCount"]
+
+                    if self._include_replies and reply_count > 0:
+
+                        replies = self._get_comment_replies(comment_thread["id"])
+
+                        # replies are returned in reverse order!
+                        for reply in reversed(replies):
+                            reply_text = reply["snippet"]["textDisplay"]
+
+                            logger.debug(f"\t{reply_text}")
+
+                            yield reply_text
+
+                if "nextPageToken" in results:
+                    results = (
+                        self._service.commentThreads()
+                        .list(
+                            part="snippet",
+                            videoId=self._video_id,
+                            textFormat="plainText",
+                            pageToken=results["nextPageToken"],
+                            maxResults=100,
+                        )
+                        .execute()
+                    )
+                else:
+                    break
 
     def get_video_title(self) -> str:
         """Get the title of the video

@@ -63,9 +63,4 @@ def create_dataframe_from_comments(all_comments: list) -> pandas.DataFrame:
 
     df = pandas.DataFrame(list(all_comments), columns=["Original Comment Text"])
 
-    # df.to_csv("comments_to_clean.csv", columns=["Original Comment Text"])
-
-    # pandas.set_option("display.max_colwidth", None)
-    # pandas.set_option("display.max_colwidth", 70)
-
     return df
