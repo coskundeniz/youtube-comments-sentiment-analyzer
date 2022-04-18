@@ -2,7 +2,6 @@ import json
 import logging
 from logging.handlers import RotatingFileHandler
 
-# from exceptions import UnsupportedConfigFileError
 import pandas
 
 
@@ -41,10 +40,6 @@ def get_configuration(filename="config.json") -> dict:
     :rtype: dict
     :returns: Configuration as dict
     """
-
-    if not filename.endswith(".json"):
-        # raise UnsupportedConfigFileError("Config file must be a json file!")
-        pass
 
     with open(filename, encoding="utf-8") as configfile:
         config = json.load(configfile)

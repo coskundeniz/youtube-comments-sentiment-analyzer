@@ -2,6 +2,8 @@ import nltk
 from nltk.corpus import stopwords
 import pandas as pd
 
+from utils import logger
+
 nltk.download("stopwords", quiet=True)
 
 
@@ -13,6 +15,8 @@ def clean_comments(dataframe: pd.DataFrame) -> pd.DataFrame:
     :rtype: pd.DataFrame
     :returns: Cleaned pandas dataframe
     """
+
+    logger.info("Cleaning data for analysis...")
 
     # remove whitespace
     dataframe["Cleaned Comment Text"] = dataframe["Original Comment Text"].str.strip()
