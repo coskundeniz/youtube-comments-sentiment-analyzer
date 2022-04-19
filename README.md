@@ -1,48 +1,54 @@
 YouTube Comments Sentiment Analyzer
 ===================================
 
-YouTube comments sentiment analyzer tool
-
-
-* https://github.com/googleapis/google-api-python-client
-* https://github.com/googleapis/google-api-python-client/blob/main/docs/README.md
-* https://developers.google.com/youtube/v3/docs/comments
-
-* https://machinelearningmastery.com/basic-data-cleaning-for-machine-learning/
+YouTube comments sentiment analyzer tool that makes polarity analysis.
+The result is saved as a pie chart output.
 
 ---
 
-* Data cleaning steps
+## How to setup
 
-    * Remove emojis +, URLs +, special characters +, and punctuation  +++
-    * Convert all text to lowercase +++
-    * Remove stop words: and, the, it, at, etc. +++
-    * Correct abbreviated words
+* Run the following commands to install the required packages
 
-* https://towardsdatascience.com/part-1-data-cleaning-does-bert-need-clean-data-6a50c9c6e9fd
-* https://stackoverflow.com/questions/66338970/cleaning-text-using-nltk
+    * `cd <project directory>`
+    * `python -m venv env`
+    * `source env/bin/activate`
+    * `python -m pip install -r requirements.txt`
 
-* Sentiment analysis
+---
 
-    * https://www.red-gate.com/simple-talk/development/data-science-development/sentiment-analysis-python/
-    * https://textblob.readthedocs.io/en/latest/quickstart.html#sentiment-analysis
-    * https://www.youtube.com/watch?v=ujId4ipkBio
-    * https://www.youtube.com/watch?v=szczpgOEdXs
-    * https://towardsdatascience.com/the-most-favorable-pre-trained-sentiment-classifiers-in-python-9107c06442c6
+## How to use
 
-* YouTube Rewind 2019: For the Record --> 1,074,433 Comments
-    * https://www.youtube.com/watch?v=2lAe1cqCOXo
+```
+usage: python yt_comments_analyzer.py [-h] [-u URL] [-c] [-cf CONFIGFILE] [-ir] [-o OUTPUT]
 
-* Call Of Duty Infinite Warfare - Game Movie --> 1,727 Comments
-    * https://www.youtube.com/watch?v=ixzKvJeXrY4
+optional arguments:
+  -h, --help                              show this help message and exit
+  -u URL, --url URL                       Video URL to analyze comments
+  -c, --useconfig                         Read configuration from config.json file
+  -cf CONFIGFILE, --configfile CONFIGFILE Read configuration from given file
+  -ir, --include_replies                  Include replies to top level comments
+  -o OUTPUT, --output OUTPUT              Name or absolute path of the output chart
+```
 
-* Official Reveal Trailer | Call of Duty: Infinite Warfare --> 743,563 Comments (half hour)
-    * https://www.youtube.com/watch?v=EeF3UTkCoxY
+### Example Commands
 
+* Get comments for the given video and output results to *sentiment_analysis_chart.png* file.
+    * `python yt_comments_analyzer.py -u https://www.youtube.com/watch?v=mM2-FPm1EhI`
 
-p yt_comments_analyzer.py -u https://www.youtube.com/watch?v=14z_Tf3p2Mw -o result_chart_final_5.png -ir
+![Result 1](images/sentiment_analysis_chart_2.png)
 
-p yt_comments_analyzer.py -u https://www.youtube.com/watch?v=EeF3UTkCoxY -o result_chart_final_6.png
+* Get comments with replies for the given video and output results to *result_chart.png* file.
+    * `python yt_comments_analyzer.py -u https://www.youtube.com/watch?v=ixzKvJeXrY4 -ir -o result_chart.png`
 
-p yt_comments_analyzer.py -u https://www.youtube.com/watch?v=ixzKvJeXrY4 -o result_chart.png
+![Result 2](images/sentiment_analysis_chart_4.png)
 
+* Get parameters from *config.json* file.
+    * `python yt_comments_analyzer.py -c`
+
+* Get parameters from the given config file.
+    * `python yt_comments_analyzer.py -c -cf custom_config.json`
+
+* Example video of an execution
+
+[![Sample Execution](images/sentiment_analysis_chart_1.png)](https://www.youtube.com/watch?v=4BnxaXusG-g "YouTube Comments Sentiment Analyzer")
