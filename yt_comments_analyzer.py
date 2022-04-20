@@ -58,9 +58,9 @@ def main():
         include_replies = config["include_replies"] if args.useconfig else args.include_replies
         output_file = config["output"] if args.useconfig else args.output
 
-        service = YoutubeService(video_url, include_replies)
+        service = YoutubeService(video_url)
 
-        all_comments = service.get_comment_threads()
+        all_comments = service.get_comment_threads(include_replies)
 
         df = create_dataframe_from_comments(all_comments)
         cleaned_df = clean_comments(df)

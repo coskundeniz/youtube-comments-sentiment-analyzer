@@ -20,29 +20,28 @@ class YoutubeService:
 
     :type video_url: str
     :param video_url: URL of the video
-    :type include_replies: bool
-    :param include_replies: Whether reply comments will be included or not
     """
 
-    def __init__(self, video_url: str, include_replies: bool = False) -> None:
+    def __init__(self, video_url: str) -> None:
 
         self._video_url = video_url
         self._video_id = video_url.split("?v=")[1]
         self._service = build(API_SERVICE_NAME, API_VERSION, developerKey=API_KEY)
-        self._include_replies = include_replies
-        self._console = Console()
 
-    def get_comment_threads(self) -> CommentGenerator:
+    def get_comment_threads(self, include_replies: bool = False) -> CommentGenerator:
         """Get the top level comments. If --include_replies option is given,
         also get the replies of the top level comments.
 
+        :type include_replies: bool
+        :param include_replies: Whether reply comments will be included or not
         :rtype: CommentGenerator
         :returns: List of comments
         """
 
-        with self._console.status(
-            f"[bold bright_green]Getting comments for video: {self._video_url}"
-        ):
+        console = Console()
+
+        with console.status(f"[bold bright_green]Getting comments for video: {self._video_url}"):
+
             logger.debug(f"Getting comments for video: {self._video_url}")
 
             results = (
@@ -65,7 +64,7 @@ class YoutubeService:
 
                     reply_count = comment_thread["snippet"]["totalReplyCount"]
 
-                    if self._include_replies and reply_count > 0:
+                    if include_replies and reply_count > 0:
 
                         replies = self._get_comment_replies(comment_thread["id"])
 

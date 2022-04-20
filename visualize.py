@@ -6,7 +6,7 @@ from utils import logger
 
 
 def create_pie_chart(dataframe: "pandas.DataFrame", video_title: str, filename: str) -> None:
-    """Create pie chart for the resulting analysis
+    """Create a pie chart for the resulting analysis
 
     :type dataframe: pandas.DataFrame
     :param dataframe: Comments dataframe
@@ -66,7 +66,4 @@ def _get_colors(sentiment_df: "pandas.DataFrame") -> list:
     red = "#80002a"
     orange = "#ff471a"
 
-    if number_of_sentiments == 3:
-        return [blue, green, red]
-
-    return [orange, blue]
+    return [blue, green, red] if number_of_sentiments == 3 else [orange, blue]

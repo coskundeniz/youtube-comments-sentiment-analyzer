@@ -22,13 +22,13 @@ def clean_comments(dataframe: pd.DataFrame) -> pd.DataFrame:
         dataframe["Original Comment Text"]
         # remove whitespace
         .str.strip()
-        # # replace newlines with space
+        # replace newlines with space
         .str.replace("\n", " ")
         # remove mentions and links
         .str.replace(r"(?:\@|http?\://|https?\://|www)\S+", "", regex=True)
         # remove punctuations, emojis, special characters
         .str.replace(r"[^\w\s]+", "", regex=True)
-        # turn to lowercase
+        # turn into lowercase
         .str.lower()
         # remove numbers
         .str.replace(r"\d+", "", regex=True)
