@@ -4,6 +4,8 @@ YouTube Comments Sentiment Analyzer
 YouTube comments sentiment analyzer tool that makes polarity analysis.
 The result is saved as a pie chart output.
 
+[Related post on Medium](https://python.plainenglish.io/how-to-create-a-youtube-comments-sentiment-analyzer-with-python-a70af502a4fc)
+
 ---
 
 ## How to setup
